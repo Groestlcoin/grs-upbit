@@ -48,7 +48,7 @@ sudo nano /etc/nginx/sites-available/default and replace with:
             root /var/www/html;
             index index.php index.html index.htm index.nginx-debian.html;
 
-			location /GRS [^/]\.php(/|$) {
+		location /GRS [^/]\.php(/|$) {
 	            fastcgi_split_path_info  ^(.+\.php)(/.+)$;
 	            fastcgi_index index.php;
 	            fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
