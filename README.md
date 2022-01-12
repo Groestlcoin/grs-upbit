@@ -47,12 +47,12 @@ sudo nano /etc/nginx/sites-available/default and replace with:
     
             root /var/www/html;
             index index.php index.html index.htm index.php;
-	    location / {
-	    	fastcgi_split_path_info  ^(.+\.php)(/.+)$;
-		fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
-		include fastcgi_params;
-		fastcgi_param   SCRIPT_FILENAME  $document_root/index.php;
-	    }
+            location / {
+	    		fastcgi_split_path_info  ^(.+\.php)(/.+)$;
+			fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+			include fastcgi_params;
+			fastcgi_param   SCRIPT_FILENAME  $document_root/index.php;
+		}
 
     }
 **Restart/reload your nginx server**
