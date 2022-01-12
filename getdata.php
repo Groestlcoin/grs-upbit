@@ -6,6 +6,8 @@ echo date("Y-m-d H:i:s"). ": Started\n";
 $markets = [];
 $coingecko_data = json_decode(file_get_contents('https://api.coingecko.com/api/v3/coins/groestlcoin?localization=false&community_data=false&developer_data=false&sparkline=false'), true);
 if(is_array($coingecko_data) && !isset($coingecko_data["error"]) && count($coingecko_data["market_data"]["current_price"]) > 0){
+	$lastUpdatedTimestamp = explode(".", $coingecko_data["market_data"]["last_updated"]);
+	$lastUpdatedTimestamp = (int)(strtotime($lastUpdatedTimestamp[0]).rtrim($lastUpdatedTimestamp[1], 'Z'));
 	foreach ($coingecko_data["market_data"]["current_price"] as $key => $currency) {
 		$market = array(
 			"symbol" => "GRS",
@@ -16,7 +18,7 @@ if(is_array($coingecko_data) && !isset($coingecko_data["error"]) && count($coing
 			"circulatingSupply" => $coingecko_data["market_data"]["circulating_supply"],
 			"maxSupply" => $coingecko_data["market_data"]["total_supply"],
 			"provider" => "Groestlcoin",
-			"lastUpdatedTimestamp" => strtotime($coingecko_data["market_data"]["last_updated"])
+			"lastUpdatedTimestamp" => $lastUpdatedTimestamp
 		);
 		$memcache->set("$key", $market);
 		array_push($markets, $market);
